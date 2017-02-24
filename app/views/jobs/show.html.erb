@@ -2,7 +2,18 @@
 
 <h3><%= @job.description %></h3>
 
-<% if @job.worker_id === current_worker.id %>
+<% if (@job.worker_id === current_worker.id) && @job.pending %>
+  <div id="add_text">
+  </div>
+  <%= form_for @job, remote: true do |f| %>
+    <%= f.label :pending, "Started work?" %>
+    <%= f.check_box :pending %>
+    <%= f.label :completed, "Job Finished?" %>
+    <%= f.check_box :completed %>
+    <%= f.submit %>
+  <% end %>
+
+<% elsif @job.worker_id === current_worker.id %>
   <div id="add_text">
   </div>
   <%= form_for @job, remote: true do |f| %>
