@@ -2,9 +2,24 @@
 
 <h3><%= @job.description %></h3>
 
-<% if @job.pending %>
-  <p>Someone has already claimed this job; it's currently pending.</p>
+<% if @job.worker_id === current_worker.id %>
+  <%= form_for @job do |f| %>
+    <%= f.label :pending, "Started work?" %>
+    <%= f.check_box :pending %>
+    <%= f.submit %>
+  <% end %>
+
+<% elsif @job.worker_id %>
+  <p>Someone has already claimed this job.</p>
+
 <% else %>
-<p id="show_job_not_claimed">No one has claimed this job!</p>
-<%= link_to "click here to claim it now", job_path(@job), remote: true, id: "claim_job_link", :method => "patch" %>
+  <p id="show_job_not_claimed">No one has claimed this job!</p>
+
+  <%= form_for @job, remote: true, id: "claim_job_button" do |f| %>
+    <%= f.hidden_field :worker_id, value: current_worker.id %>
+    <%= f.hidden_field :pending, value: false %>
+    <%= f.submit "Claim Job"%>
+  <% end %>
+
+  <!-- <%= link_to "click here to claim it now", job_path(@job), remote: true, id: "claim_job_link", :method => "patch" %> -->
 <% end %>
