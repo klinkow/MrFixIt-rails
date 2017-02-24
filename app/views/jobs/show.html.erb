@@ -3,7 +3,9 @@
 <h3><%= @job.description %></h3>
 
 <% if @job.worker_id === current_worker.id %>
-  <%= form_for @job do |f| %>
+  <div id="add_text">
+  </div>
+  <%= form_for @job, remote: true do |f| %>
     <%= f.label :pending, "Started work?" %>
     <%= f.check_box :pending %>
     <%= f.submit %>
@@ -15,7 +17,7 @@
 <% else %>
   <p id="show_job_not_claimed">No one has claimed this job!</p>
 
-  <%= form_for @job, remote: true, id: "claim_job_button" do |f| %>
+  <%= form_for @job, remote: true do |f| %>
     <%= f.hidden_field :worker_id, value: current_worker.id %>
     <%= f.hidden_field :pending, value: false %>
     <%= f.submit "Claim Job"%>

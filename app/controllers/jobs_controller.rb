@@ -27,7 +27,7 @@ class JobsController < ApplicationController
     if current_worker
         if @job.update(job_params)
           respond_to do |format|
-            format.html { redirect_to worker_path(current_worker), notice: "You've successfully claimed this job." }
+            format.html { redirect_to worker_path(current_worker), notice: "Job Updated." }
             format.js
           end
         else
