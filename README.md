@@ -34,12 +34,6 @@ _The following functionality is present in our application:_
 * Workers can mark jobs "complete" **using AJAX**.
 * Unit and integration testing are implemented.
 
-### Still Needed
-
-_The following must still be implemented:_
-
-
-
 ## License
 
 The MIT License (MIT)
