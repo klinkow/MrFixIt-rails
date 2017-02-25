@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory(:worker) do
-    email('worker@worker.com')
+    email('worker1@worker.com')
     password('password')
-    id(27)
   end
 
   factory(:user) do
@@ -11,9 +10,8 @@ FactoryGirl.define do
     id(28)
   end
 
-  factory(:job1) do
+  factory(:job) do
     title('Fix Sink')
     description('There are leaky pipes.')
-    worker_id(27)
   end
 end

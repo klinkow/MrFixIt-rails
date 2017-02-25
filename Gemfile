@@ -19,6 +19,8 @@ group :development, :test do
   gem "factory_girl_rails", "~> 4.0"
   gem 'capybara'
   gem 'simplecov', :require => false
+  gem 'poltergeist'
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
 end
 
 group :development do

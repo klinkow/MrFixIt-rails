@@ -2,37 +2,41 @@
 
 <h3><%= @job.description %></h3>
 
-<% if (@job.worker_id === current_worker.id) && @job.pending %>
-  <div id="add_text">
-  </div>
-  <%= form_for @job, remote: true do |f| %>
-    <%= f.label :pending, "Started work?" %>
-    <%= f.check_box :pending %>
-    <%= f.label :completed, "Job Finished?" %>
-    <%= f.check_box :completed %>
-    <%= f.submit %>
+<% if current_worker %>
+  <% if (@job.worker_id === current_worker.id) && @job.pending %>
+    <div id="add_text">
+    </div>
+    <%= form_for @job, remote: true do |f| %>
+      <%= f.label :pending, "Started work?" %>
+      <%= f.check_box :pending %>
+      <%= f.label :completed, "Job Finished?" %>
+      <%= f.check_box :completed %>
+      <%= f.submit %>
+    <% end %>
+
+  <% elsif @job.worker_id === current_worker.id %>
+    <div id="add_text">
+    </div>
+    <%= form_for @job, remote: true do |f| %>
+      <%= f.label :pending, "Started work?" %>
+      <%= f.check_box :pending %>
+      <%= f.submit %>
+    <% end %>
+
+  <% elsif @job.worker_id %>
+    <p>Someone has already claimed this job.</p>
+
+  <% else %>
+    <p id="show_job_not_claimed">No one has claimed this job!</p>
+
+    <%= form_for @job, remote: true do |f| %>
+      <%= f.hidden_field :worker_id, value: current_worker.id %>
+      <%= f.hidden_field :pending, value: false %>
+      <%= f.submit "Claim Job"%>
+    <% end %>
+
+    <!-- <%= link_to "click here to claim it now", job_path(@job), remote: true, id: "claim_job_link", :method => "patch" %> -->
   <% end %>
-
-<% elsif @job.worker_id === current_worker.id %>
-  <div id="add_text">
-  </div>
-  <%= form_for @job, remote: true do |f| %>
-    <%= f.label :pending, "Started work?" %>
-    <%= f.check_box :pending %>
-    <%= f.submit %>
-  <% end %>
-
-<% elsif @job.worker_id %>
-  <p>Someone has already claimed this job.</p>
-
 <% else %>
-  <p id="show_job_not_claimed">No one has claimed this job!</p>
-
-  <%= form_for @job, remote: true do |f| %>
-    <%= f.hidden_field :worker_id, value: current_worker.id %>
-    <%= f.hidden_field :pending, value: false %>
-    <%= f.submit "Claim Job"%>
-  <% end %>
-
-  <!-- <%= link_to "click here to claim it now", job_path(@job), remote: true, id: "claim_job_link", :method => "patch" %> -->
+  <p>No one has claimed this job!</p>
 <% end %>

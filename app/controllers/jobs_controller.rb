@@ -46,5 +46,4 @@ private
   def job_params
     params.require(:job).permit(:title, :description, :pending, :worker_id, :completed)
   end
-
 end
